@@ -80,7 +80,6 @@ def main():
         ("config", "virtualenvs.in-project", "true", "--local"),
         ("update",),
         ("install",),
-        ("run", "pre-commit", "install", "-f"),
     ):
         run_poetry_command(app, *command)
 
@@ -108,6 +107,10 @@ def main():
         logging.info("No dotenv: deleting boilerplate .env and config.py")
         try_remove(".env")
         try_remove("{{ cookiecutter.project_slug }}", "config.py")
+
+    # For some reason, this exits the process with an exit code even if its successful.
+    # This must be run at the end.
+    run_poetry_command(app, "run", "pre-commit", "install", "-f")
 
 
 if __name__ == "__main__":
