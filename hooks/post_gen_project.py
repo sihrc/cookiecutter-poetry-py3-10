@@ -74,6 +74,7 @@ def update_json(
 
 def main():
     os.system("git init")
+    os.system("git checkout -b main")
 
     # Commands to run
     for command in (
@@ -114,6 +115,8 @@ def main():
 
     with open(".gitignore", "a") as f:
         f.write(".vscode/")
+
+    os.system("git commit -am 'Cut a cookie from a cookiecutter'")
 
 
 if __name__ == "__main__":
