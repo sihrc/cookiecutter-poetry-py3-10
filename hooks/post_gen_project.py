@@ -13,7 +13,9 @@ from poetry.console import Application
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
-def run_poetry_command(app: Application, *args_list: t.Iterable[str]):
+def run_poetry_command(*args_list: t.Iterable[str]):
+    app = Application()
+    app.config.set_terminate_after_run(False)
     output_buffer = io.StringIO()
 
     with redirect_stdout(output_buffer):
@@ -24,7 +26,7 @@ def run_poetry_command(app: Application, *args_list: t.Iterable[str]):
     stdout = output_buffer.getvalue()
 
     # remove exit code
-    return stdout.split()[:-1]
+    return stdout.split()
 
 
 def try_remove(path: t.Union[str, Path]):
@@ -72,23 +74,21 @@ def update_json(
 
 def main():
     os.system("git init")
-    app = Application()
-    app.config.set_terminate_after_run(False)
 
     # Commands to run
     for command in (
-        ("config", "virtualenvs.in-project", "true", "--local"),
+        # ("config", "virtualenvs.in-project", "true", "--local"),
         ("update",),
         ("install",),
     ):
-        run_poetry_command(app, *command)
+        run_poetry_command(*command)
 
     # TODO: Handle vscode / dotenv options
     if "{{ cookiecutter.use_vscode }}" == "y":
         logging.info("Setting up vscode python interpreter path")
 
         # Fetch path to python interpreter for this poetry env
-        (path,) = run_poetry_command(app, "env", "info", "--path")
+        path = run_poetry_command("env", "info", "--path")[0]
 
         logging.info(f"Setting python interpreter path to {path}")
 
@@ -110,7 +110,7 @@ def main():
 
     # For some reason, this exits the process with an exit code even if its successful.
     # This must be run at the end.
-    run_poetry_command(app, "run", "pre-commit", "install", "-f")
+    run_poetry_command("run", "pre-commit", "install", "-f")
 
 
 if __name__ == "__main__":
