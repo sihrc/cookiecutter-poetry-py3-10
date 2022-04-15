@@ -1,0 +1,11 @@
+{
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "boundary",
+  "files.trimTrailingWhitespace": true,
+  "python.defaultInterpreterPath": "/usr/bin/python",
+  "python.formatting.provider": "black",
+  "python.linting.flake8Args": ["--max-line-length=88"],
+  "python.linting.flake8Enabled": true,
+  "window.title": "${dirty}${rootName}${separator}${activeEditorMedium}"
+}
