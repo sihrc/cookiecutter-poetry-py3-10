@@ -6,6 +6,7 @@ import os
 import sys
 import typing as t
 from contextlib import redirect_stdout
+from multiprocessing import Process
 from pathlib import Path
 
 from poetry.console import Application
@@ -110,13 +111,13 @@ def main():
         try_remove("{{ cookiecutter.project_slug }}", "config.py")
 
     with open(".gitignore", "a") as f:
-        f.write(".vscode/")
+        f.write(".vscode/\n")
 
-    os.system("git commit -am 'Cut a cookie from a cookiecutter'")
+    p = Process(target=run_poetry_command, args=("run", "pre-commit", "install", "-f"))
+    p.start()
+    p.join()
 
-    # For some reason, this exits the process with an exit code even if its successful.
-    # This must be run at the end.
-    run_poetry_command("run", "pre-commit", "install", "-f")
+    os.system("git add -A; git commit -m 'Cut a cookie from a cookiecutter'")
 
 
 if __name__ == "__main__":
