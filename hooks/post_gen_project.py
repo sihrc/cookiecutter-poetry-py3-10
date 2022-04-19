@@ -68,7 +68,7 @@ def update_json(
     settings_json.update(values)
 
     with path.open("w") as f:
-        json.dump(settings_json, f)
+        json.dump(settings_json, f, indent=2)
 
     return settings_json
 
@@ -107,7 +107,6 @@ def main():
     if "{{ cookiecutter.use_dotenv }}" != "y":
         # Remove .env & config.py
         logging.info("No dotenv: deleting boilerplate .env and config.py")
-        try_remove(".env")
         try_remove("{{ cookiecutter.project_slug }}", "config.py")
 
     with open(".gitignore", "a") as f:

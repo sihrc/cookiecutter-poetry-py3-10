@@ -16,6 +16,12 @@ $ poetry install
 $ poetry run python3 -c "import {{ cookiecutter.project_slug}}; print({{cookiecutter.project_slug}})"
 ```
 
+## Running tests
+
+```bash
+$ poetry run test
+```
+
 ## pre-commit hooks
 
 Configured pre-commit hooks
@@ -28,15 +34,16 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/psf/black
-    rev: 22.3.0
-    hooks:
-      - id: black
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:
       - id: isort
         name: isort (python)
+        args: ["--profile", "black"]
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
 ```
 
 Usage:
