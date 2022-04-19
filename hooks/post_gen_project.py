@@ -109,14 +109,14 @@ def main():
         try_remove(".env")
         try_remove("{{ cookiecutter.project_slug }}", "config.py")
 
-    # For some reason, this exits the process with an exit code even if its successful.
-    # This must be run at the end.
-    run_poetry_command("run", "pre-commit", "install", "-f")
-
     with open(".gitignore", "a") as f:
         f.write(".vscode/")
 
     os.system("git commit -am 'Cut a cookie from a cookiecutter'")
+
+    # For some reason, this exits the process with an exit code even if its successful.
+    # This must be run at the end.
+    run_poetry_command("run", "pre-commit", "install", "-f")
 
 
 if __name__ == "__main__":
