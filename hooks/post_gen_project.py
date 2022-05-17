@@ -107,7 +107,7 @@ def main():
     if "{{ cookiecutter.use_dotenv }}" != "y":
         # Remove .env & config.py
         logging.info("No dotenv: deleting boilerplate .env and config.py")
-        try_remove("{{ cookiecutter.project_slug }}", "config.py")
+        try_remove(Path("{{ cookiecutter.project_slug }}", "config.py"))
 
     with open(".gitignore", "a") as f:
         f.write(".vscode/\n")
