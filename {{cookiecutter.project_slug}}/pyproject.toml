@@ -8,7 +8,6 @@ packages = [ {include = "{{ cookiecutter.project_slug }}"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 setuptools = "^57.4.0"
-pytest = {version = "^6.2.4", extras = ["test"]}
 {% if cookiecutter.use_dotenv == 'y' %}python-dotenv = "^0.19.2"{%- endif %}
 
 
