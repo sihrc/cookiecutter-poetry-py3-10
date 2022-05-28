@@ -80,6 +80,7 @@ def main():
     # Commands to run
     for command in (
         # ("config", "virtualenvs.in-project", "true", "--local"),
+        ("add", "--dev", "pytest", "black", "isort", "ipdb"),
         ("update",),
         ("install",),
     ):
@@ -88,6 +89,7 @@ def main():
     # TODO: Handle vscode / dotenv options
     if "{{ cookiecutter.use_vscode }}" == "y":
         logging.info("Setting up vscode python interpreter path")
+        run_poetry_command("add", "python-dotenv")
 
         # Fetch path to python interpreter for this poetry env
         path = run_poetry_command("env", "info", "--path")[0]
