@@ -5,25 +5,15 @@ ENV ENV="/root/.ashrc"
 ENV PATH=/root/.local/bin:/root/.cargo/bin:${PATH}
 
 RUN apk update && \
-    apk add --no-cache \
-    curl \
-    gcc \
-    g++ \
-    libressl-dev \
-    musl-dev \
-    git \
-    libffi-dev && \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile=minimal && \
+    apk add --no-cache curl && \
     curl -sSL https://install.python-poetry.org/ | python3 && \
-    poetry config virtualenvs.in-project true {% if cookiecutter.use_private_repos == "y" %} && \
-    apk add --no-cache openssh && \
-    mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts {% endif %}
+    poetry config virtualenvs.in-project true
 
 
 WORKDIR /app
 ADD pyproject.toml /app/
 
-RUN {% if cookiecutter.use_private_repos == "y" %} --mount=type=ssh {% endif %} poetry install --no-ansi ${POETRY_INSTALL_ARGS}
+RUN poetry install
 
 # Start Project Dockerfile
 FROM alpine:3.15
@@ -33,9 +23,15 @@ LABEL author="{{cookiecutter.author}}"
 LABEL email="{{cookiecutter.email}}"
 LABEL description="{{cookiecutter.project_description}}"
 
-ENV PATH = "/app/.venv/bin":${PATH}
+ENV PATH = "/app/.venv/bin:${PATH}"
+ENV PYTHONPATH="/app/.venv/lib/python3.10/site-packages:/{{ cookiecutter.project_slug }}"
+
+RUN apk add --no-cache vim bash
 
 COPY --from=poetry-builder /app /app
+RUN ln -sf $(which python3) /venv/.venv/bin/python
 
 WORKDIR /{{ cookiecutter.project_slug }}
 COPY . /{{ cookiecutter.project_slug }}
+
+ENTRYPOINT [ "bash" ]

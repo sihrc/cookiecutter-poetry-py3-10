@@ -2,10 +2,7 @@ version: "3"
 
 services:
   {{ cookiecutter.project_slug }}:
-    build:{% if cookiecutter.use_private_repos == "y" %}
-      ssh:
-        - default{% endif %}
-      context: .
+    build: .
     container_name: {{ cookiecutter.project_slug }}
     env_file: .env
     tty: true

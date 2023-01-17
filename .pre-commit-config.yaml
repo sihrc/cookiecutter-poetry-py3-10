@@ -2,6 +2,8 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
+      - id: check-yaml
+        exclude: ^{{cookiecutter.project_slug}}
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/pycqa/isort
@@ -14,3 +16,7 @@ repos:
     rev: 22.3.0
     hooks:
       - id: black
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.991 # Use the sha / tag you want to point at
+    hooks:
+      - id: mypy

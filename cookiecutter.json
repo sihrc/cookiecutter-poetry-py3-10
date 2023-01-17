@@ -4,8 +4,5 @@
   "project_name": "Poetry Python 3.10 Library",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
   "project_description": "Cut from cookiecutter-poetry-py3-10",
-  "use_private_repos": "y",
-  "version": "0.1.0",
-  "use_vscode": "y",
-  "use_dotenv": "y"
+  "version": "0.1.0"
 }
