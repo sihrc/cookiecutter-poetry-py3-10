@@ -1,6 +1,6 @@
 {
-  "author": "sudocoder dev",
-  "email": "dev@sudocodes.dev",
+  "author": "Cookie Loving Engineer",
+  "email": "ilovecookies@imanengineer.io",
   "project_name": "Poetry Python 3.10 Library",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
   "project_description": "Cut from cookiecutter-poetry-py3-10",
