@@ -34,7 +34,7 @@ pip3 install cookiecutter
 ## Usage
 
 ```bash
-cookiecutter gh:sihrc/cookiecutter-poetry-py3-10
+cookiecutter gh:IndicoDataSolutions/cookiecutter-poetry-py3-10
 ```
 
 The cookiecutter generation hooks will automatically setup all features and dependency necessary for this project.
@@ -54,6 +54,7 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
+        args: ["--profile", "black"]
   - repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
