@@ -1,37 +1,32 @@
-FROM python:3.10-alpine AS poetry-builder
+FROM python:3.10.6 as builder
 
-ARG POETRY_INSTALL_ARGS
-ENV ENV="/root/.ashrc"
-ENV PATH=/root/.local/bin:/root/.cargo/bin:${PATH}
+ENV PATH="/root/.local/bin:${PATH}"
 
-RUN apk update && \
-    apk add --no-cache curl && \
-    curl -sSL https://install.python-poetry.org/ | python3 && \
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    poetry self update --preview && \
     poetry config virtualenvs.in-project true
 
 
-WORKDIR /app
-ADD pyproject.toml /app/
+COPY pyproject.toml poetry.lock /venv/
+
+WORKDIR /venv/
 
 RUN poetry install
 
-# Start Project Dockerfile
-FROM alpine:3.15
+FROM python:3.10.6
 
 LABEL version="{{cookiecutter.version}}"
 LABEL author="{{cookiecutter.author}}"
 LABEL email="{{cookiecutter.email}}"
 LABEL description="{{cookiecutter.project_description}}"
 
-ENV PATH = "/app/.venv/bin:${PATH}"
-ENV PYTHONPATH="/app/.venv/lib/python3.10/site-packages:/{{ cookiecutter.project_slug }}"
+ENV PYTHONPATH=/{{cookiecutter.project_slug}} PATH=/venv/.venv/bin:/{{cookiecutter.project_slug}}/bin:/{{cookiecutter.project_slug}}/scripts:${PATH}
+COPY --from=builder /venv /venv
 
-RUN apk add --no-cache vim bash
-
-COPY --from=poetry-builder /app /app
-RUN ln -sf $(which python3) /venv/.venv/bin/python
+RUN apt update
 
 WORKDIR /{{ cookiecutter.project_slug }}
 COPY . /{{ cookiecutter.project_slug }}
+
 
 ENTRYPOINT [ "bash" ]
