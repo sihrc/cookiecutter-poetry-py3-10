@@ -68,13 +68,14 @@ def main():
             "virtualenvs.in-project",
             "true",
         ),
-        ("add", "--dev", "pytest", "black", "isort", "ipdb"),
+        ("add", "--dev", "pytest", "pytest-asyncio", "black", "isort", "ipdb"),
         ("update",),
         ("install",),
     ):
         run_poetry_command(*command)
 
     getattr(sh, "pre-commit").install("-f")
+    getattr(sh, "pre-commit").run("-a")
     sh.git.add("-A")
     sh.git.commit("-m", "'Cut a cookie from a cookiecutter'")
 
