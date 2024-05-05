@@ -68,7 +68,7 @@ def main():
             "virtualenvs.in-project",
             "true",
         ),
-        ("add", "--dev", "pytest", "pytest-asyncio", "black", "isort", "ipdb"),
+        ("add", "--group", "dev", "pytest", "ipdb", "mypy", "ruff", "pytest-cov"),
         ("update",),
         ("install",),
     ):

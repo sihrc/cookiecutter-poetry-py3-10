@@ -6,6 +6,6 @@ services:
     container_name: {{ cookiecutter.project_slug }}
     env_file: .env
     tty: true
-    entrypoint: ash
+    entrypoint: bash
     volumes:
       - .:/{{ cookiecutter.project_slug }}
