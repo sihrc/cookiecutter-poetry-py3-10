@@ -1,8 +1,9 @@
 {
-  "author": "Cookie Loving Engineer",
-  "email": "ilovecookies@imanengineer.io",
+  "author": "Chris Lee",
+  "email": "chris@cosmosnexus.co",
   "project_name": "Poetry Python 3.10 Library",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
-  "project_description": "Cut from cookiecutter-poetry-py3-10",
-  "version": "0.1.0"
+  "project_description": "{{ cookiecutter.project_name }}",
+  "version": "0.1.0",
+  "python_version": ">=3.12.6,<4"
 }

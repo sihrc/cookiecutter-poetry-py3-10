@@ -6,5 +6,3 @@
 Authors:
 {{cookiecutter.author}} <{{cookiecutter.email}}>
 """
-
-version = "{{ cookiecutter.version }}"
